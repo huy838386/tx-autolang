@@ -26,12 +26,27 @@ export async function GET(request: NextRequest) {
   try {
     const headers = request.headers;
 
-    // Vercel inject các header này
+    // Vercel inject x-vercel-ip-country header - dùng trực tiếp
+    const vercelCountry = headers.get("x-vercel-ip-country") || "";
+
+    // Nếu có country từ Vercel (đáng tin cậy hơn)
+    if (vercelCountry && vercelCountry.length === 2) {
+      return NextResponse.json({
+        success: true,
+        countryCode: vercelCountry,
+        ip: headers.get("x-real-ip") || "",
+        ipv4: "",
+        country: vercelCountry,
+        city: headers.get("x-vercel-ip-city") || "",
+        region: headers.get("x-vercel-ip-country-region") || "",
+      });
+    }
+
+    // Fallback: dùng IP detection cho local/hosting khác
     const xRealIp = (headers.get("x-real-ip") || "").trim();
     const forwarded = headers.get("x-forwarded-for");
     const forwardedIpv4 = extractFirstIpv4(forwarded);
 
-    // Ưu tiên x-real-ip (Vercel set đây là IP thật), fallback x-forwarded-for
     const rawIp = xRealIp || forwardedIpv4 || "unknown";
     const ipv4 = isIpv4(rawIp) ? rawIp : forwardedIpv4;
 
@@ -42,10 +57,11 @@ export async function GET(request: NextRequest) {
       rawIp === "unknown";
 
     if (isLocalhost) {
+      // Localhost: fallback về browser language detection (en)
       return NextResponse.json({ success: false, countryCode: "US", ip: rawIp, ipv4: "" });
     }
 
-    // Dùng ipinfo để lấy country/city/region theo IPv4
+    // Dùng ipinfo để lấy country
     const ipinfoToken = process.env.IPINFO_TOKEN;
     const lookupIp = ipv4 || rawIp;
     let countryCode = "US";

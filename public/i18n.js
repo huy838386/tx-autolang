@@ -140,6 +140,7 @@
   }
 
   function init() {
+    // Ưu tiên 1: Ngôn ngữ đã lưu
     var savedLang = getSavedLang();
     if (savedLang) {
       loadLanguageJson(savedLang, function () {
@@ -148,6 +149,16 @@
       return;
     }
 
+    // Ưu tiên 2: Browser language (nhanh, không cần API call)
+    var browserLang = getBrowserLang();
+    if (browserLang) {
+      loadLanguageJson(browserLang, function () {
+        applyLanguage(browserLang);
+      });
+      return;
+    }
+
+    // Ưu tiên 3: API detect location
     if (typeof fetch !== "undefined") {
       fetch("/api/detect-location")
         .then(function (res) { return res.json(); })
@@ -155,7 +166,6 @@
           var countryCode = data.countryCode || "";
           var detectedLang = COUNTRY_TO_LANG[countryCode] || null;
           if (!detectedLang || !isSupported(detectedLang)) {
-            var browserLang = getBrowserLang();
             detectedLang = browserLang || "en";
           }
           loadLanguageJson(detectedLang, function () {
@@ -163,13 +173,13 @@
           });
         })
         .catch(function () {
-          var fallback = getBrowserLang() || "en";
+          var fallback = browserLang || "en";
           loadLanguageJson(fallback, function () {
             applyLanguage(fallback);
           });
         });
     } else {
-      var fallback2 = getBrowserLang() || "en";
+      var fallback2 = browserLang || "en";
       loadLanguageJson(fallback2, function () {
         applyLanguage(fallback2);
       });
