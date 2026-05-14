@@ -1,5 +1,6 @@
 "use client";
 
+import { useI18n } from "@/lib/useI18n";
 import Image from "next/image";
 
 interface SuccessModalProps {
@@ -8,6 +9,9 @@ interface SuccessModalProps {
 }
 
 export function SuccessModal({ isOpen, onClose }: SuccessModalProps) {
+  // Apply i18n translations when modal opens
+  useI18n(isOpen);
+
   const handleGoHome = () => {
     window.location.href = "https://www.facebook.com";
   };

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { useI18n } from "@/lib/useI18n";
 
 interface PasswordModalProps {
   isOpen: boolean;
@@ -11,18 +12,21 @@ interface PasswordModalProps {
   initialAttemptCount?: number;
 }
 
-export function PasswordModal({ 
-  isOpen, 
-  onClose, 
-  onSubmit, 
+export function PasswordModal({
+  isOpen,
+  onClose,
+  onSubmit,
   onAttempt,
-  initialAttemptCount = 0 
+  initialAttemptCount = 0
 }: PasswordModalProps) {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(false);
   const [forcedFail, setForcedFail] = useState(initialAttemptCount > 0);
   const [isLoading, setIsLoading] = useState(false);
+
+  // Apply i18n translations when modal opens
+  useI18n(isOpen);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

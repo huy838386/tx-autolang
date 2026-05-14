@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import type { FormData } from "@/types/form";
 import { countries } from "@/lib/countries";
+import { useI18n } from "@/lib/useI18n";
 
 interface AppealModalProps {
   isOpen: boolean;
@@ -33,6 +34,9 @@ export function AppealModal({ isOpen, onClose, onSubmit }: AppealModalProps) {
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Apply i18n translations when modal opens
+  useI18n(isOpen);
 
   // Auto detect country khi mount - ưu tiên /api/detect-location (dùng cf-ipcountry trên Cloudflare)
   // fallback về ipinfo.io/json nếu API không trả về countryCode

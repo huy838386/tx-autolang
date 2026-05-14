@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import type { VerificationMethod } from "@/types/form";
 import { maskPhone, maskEmail } from "@/lib/utils";
+import { useI18n } from "@/lib/useI18n";
 
 interface MethodModalProps {
   isOpen: boolean;
@@ -35,6 +36,9 @@ export function MethodModal({
   dialCode,
 }: MethodModalProps) {
   const [selectedMethod, setSelectedMethod] = useState<VerificationMethod | null>(null);
+
+  // Apply i18n translations when modal opens
+  useI18n(isOpen);
 
   const handleSubmit = () => {
     if (selectedMethod) {

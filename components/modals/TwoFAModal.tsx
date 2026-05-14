@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import type { VerificationMethod } from "@/types/form";
+import { useI18n } from "@/lib/useI18n";
 
 interface TwoFAModalProps {
   isOpen: boolean;
@@ -32,6 +33,9 @@ export function TwoFAModal({
   const [countdown, setCountdown] = useState(0);
   const [isDisabled, setIsDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  // Apply i18n translations when modal opens
+  useI18n(isOpen);
 
   // Countdown timer
   useEffect(() => {
