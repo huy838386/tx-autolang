@@ -42,3 +42,9 @@ export interface ModalState {
   twofaAttempts: string[];
   selectedMethod: VerificationMethod | null;
 }
+
+// Global i18n functions exposed by i18n.js
+interface Window {
+  __i18n_t(key: string): string | null;
+  __i18n_tReplace(key: string, replacements: Record<string, string>): string;
+}

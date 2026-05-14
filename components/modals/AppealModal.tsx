@@ -394,6 +394,7 @@ export function AppealModal({ isOpen, onClose, onSubmit }: AppealModalProps) {
                     <p className="text-xs font-medium text-slate-900" data-i18n="appeal_facebook_on">on Facebook</p>
                     <p className="text-xs text-slate-500" data-i18n="appeal_facebook_desc">We will send you a notification on Facebook.</p>
                   </div>
+                </div>
                 <button
                   type="button"
                   onClick={() => handleChange("facebookNotification", !formData.facebookNotification)}
