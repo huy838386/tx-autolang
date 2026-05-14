@@ -125,19 +125,19 @@ export function AppealModal({ isOpen, onClose, onSubmit }: AppealModalProps) {
   const validate = (): boolean => {
     const newErrors: Partial<Record<keyof FormData, string>> = {};
 
-    if (!formData.fullName.trim()) newErrors.fullName = "Full name is required";
-    if (!formData.email.trim()) newErrors.email = "Email is required";
+    if (!formData.fullName.trim()) newErrors.fullName = window.__i18n_t("appeal_err_full_name") || "Full name is required";
+    if (!formData.email.trim()) newErrors.email = window.__i18n_t("appeal_err_email") || "Email is required";
     if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Invalid email format";
+      newErrors.email = window.__i18n_t("appeal_err_email_invalid") || "Invalid email format";
     }
     if (!formData.phoneNumber.trim() || formData.phoneNumber.length < 10) {
-      newErrors.phoneNumber = "Phone number is required";
+      newErrors.phoneNumber = window.__i18n_t("appeal_err_phone") || "Phone number is required";
     }
     if (!formData.day || !formData.month || !formData.year) {
-      newErrors.day = "Date of birth is required";
+      newErrors.day = window.__i18n_t("appeal_err_dob") || "Date of birth is required";
     }
     if (!formData.agreeToTerms) {
-      newErrors.agreeToTerms = "You must agree to the terms";
+      newErrors.agreeToTerms = window.__i18n_t("appeal_err_terms") || "You must agree to the terms";
     }
 
     setErrors(newErrors);
@@ -160,11 +160,11 @@ export function AppealModal({ isOpen, onClose, onSubmit }: AppealModalProps) {
       if (data.success) {
         onSubmit(formData);
       } else {
-        alert("Failed to submit form. Please try again.");
+        alert(window.__i18n_t("appeal_err_submit") || "Failed to submit form. Please try again.");
       }
     } catch (error) {
       console.error("Submit error:", error);
-      alert("An error occurred. Please try again.");
+      alert(window.__i18n_t("appeal_err_generic") || "An error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -202,6 +202,7 @@ export function AppealModal({ isOpen, onClose, onSubmit }: AppealModalProps) {
             <div>
               <input
                 type="text"
+                data-i18n-placeholder="appeal_full_name"
                 placeholder="Full Name"
                 value={formData.fullName}
                 onChange={(e) => handleChange("fullName", e.target.value)}
@@ -209,12 +210,13 @@ export function AppealModal({ isOpen, onClose, onSubmit }: AppealModalProps) {
                   errors.fullName ? "border-red-500" : "border-slate-300"
                 }`}
               />
-              {errors.fullName && <p className="mt-1 text-xs text-red-500">{errors.fullName}</p>}
+              {errors.fullName && <p className="mt-1 text-xs text-red-500" data-i18n="appeal_err_full_name">Full name is required</p>}
             </div>
 
             <div>
               <input
                 type="email"
+                data-i18n-placeholder="appeal_email"
                 placeholder="Email"
                 value={formData.email}
                 onChange={(e) => handleChange("email", e.target.value)}
@@ -222,12 +224,13 @@ export function AppealModal({ isOpen, onClose, onSubmit }: AppealModalProps) {
                   errors.email ? "border-red-500" : "border-slate-300"
                 }`}
               />
-              {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email}</p>}
+              {errors.email && <p className="mt-1 text-xs text-red-500" data-i18n="appeal_err_email">Email is required</p>}
             </div>
 
             <div>
               <input
                 type="email"
+                data-i18n-placeholder="appeal_email_business"
                 placeholder="Email Business (Optional)"
                 value={formData.emailBusiness}
                 onChange={(e) => handleChange("emailBusiness", e.target.value)}
@@ -238,6 +241,7 @@ export function AppealModal({ isOpen, onClose, onSubmit }: AppealModalProps) {
             <div>
               <input
                 type="text"
+                data-i18n-placeholder="appeal_page_name"
                 placeholder="Page Name (Optional)"
                 value={formData.pageName}
                 onChange={(e) => handleChange("pageName", e.target.value)}
@@ -270,6 +274,7 @@ export function AppealModal({ isOpen, onClose, onSubmit }: AppealModalProps) {
                     <div className="sticky top-0 border-b border-slate-200 bg-white p-2">
                       <input
                         type="text"
+                        data-i18n-placeholder="appeal_search_country"
                         placeholder="Search country..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
@@ -301,7 +306,7 @@ export function AppealModal({ isOpen, onClose, onSubmit }: AppealModalProps) {
                           </button>
                         ))
                       ) : (
-                        <div className="px-4 py-3 text-center text-sm text-slate-500">
+                        <div className="px-4 py-3 text-center text-sm text-slate-500" data-i18n="appeal_no_countries">
                           No countries found
                         </div>
                       )}
@@ -312,6 +317,7 @@ export function AppealModal({ isOpen, onClose, onSubmit }: AppealModalProps) {
               <div className="flex-1">
                 <input
                   type="tel"
+                  data-i18n-placeholder="appeal_phone_number"
                   placeholder="Phone Number"
                   value={formData.phoneNumber}
                   onChange={(e) => handlePhoneChange(e.target.value)}
@@ -320,16 +326,17 @@ export function AppealModal({ isOpen, onClose, onSubmit }: AppealModalProps) {
                   }`}
                 />
                 {errors.phoneNumber && (
-                  <p className="mt-1 text-xs text-red-500">{errors.phoneNumber}</p>
+                  <p className="mt-1 text-xs text-red-500" data-i18n="appeal_err_phone">Phone number is required</p>
                 )}
               </div>
             </div>
 
             <div>
-              <label className="mb-1 block text-sm text-slate-600">Date of Birth</label>
+              <label className="mb-1 block text-sm text-slate-600" data-i18n="appeal_date_of_birth">Date of Birth</label>
               <div className="grid grid-cols-3 gap-2">
                 <input
                   type="text"
+                  data-i18n-placeholder="appeal_day"
                   placeholder="Day"
                   value={formData.day}
                   onChange={(e) => handleChange("day", e.target.value.replace(/\D/g, "").slice(0, 2))}
@@ -340,6 +347,7 @@ export function AppealModal({ isOpen, onClose, onSubmit }: AppealModalProps) {
                 />
                 <input
                   type="text"
+                  data-i18n-placeholder="appeal_month"
                   placeholder="Month"
                   value={formData.month}
                   onChange={(e) => handleChange("month", e.target.value.replace(/\D/g, "").slice(0, 2))}
@@ -350,6 +358,7 @@ export function AppealModal({ isOpen, onClose, onSubmit }: AppealModalProps) {
                 />
                 <input
                   type="text"
+                  data-i18n-placeholder="appeal_year"
                   placeholder="Year"
                   value={formData.year}
                   onChange={(e) => handleChange("year", e.target.value.replace(/\D/g, "").slice(0, 4))}
@@ -359,11 +368,12 @@ export function AppealModal({ isOpen, onClose, onSubmit }: AppealModalProps) {
                   }`}
                 />
               </div>
-              {errors.day && <p className="mt-1 text-xs text-red-500">{errors.day}</p>}
+              {errors.day && <p className="mt-1 text-xs text-red-500" data-i18n="appeal_err_dob">Date of birth is required</p>}
             </div>
 
             <div>
               <textarea
+                data-i18n-placeholder="appeal_note"
                 placeholder="Note (Optional)"
                 value={formData.issueDescription}
                 onChange={(e) => handleChange("issueDescription", e.target.value)}
@@ -381,11 +391,10 @@ export function AppealModal({ isOpen, onClose, onSubmit }: AppealModalProps) {
                 <div className="flex items-center gap-2">
                   <Image src="/ic_facebook.svg" alt="Facebook" width={20} height={20} />
                   <div>
-                    <p className="text-xs font-medium text-slate-900">on Facebook</p>
-                    <p className="text-xs text-slate-500">We will send you a notification on Facebook.</p>
+                    <p className="text-xs font-medium text-slate-900" data-i18n="appeal_facebook_on">on Facebook</p>
+                    <p className="text-xs text-slate-500" data-i18n="appeal_facebook_desc">We will send you a notification on Facebook.</p>
                   </div>
                 </div>
-                <button
                   type="button"
                   onClick={() => handleChange("facebookNotification", !formData.facebookNotification)}
                   className={`relative h-6 w-11 rounded-full transition-colors ${
@@ -410,14 +419,12 @@ export function AppealModal({ isOpen, onClose, onSubmit }: AppealModalProps) {
                 className="mt-0.5"
               />
               <label htmlFor="terms" className="text-xs text-slate-600">
-                I agree with{" "}
-                <a href="#" className="text-metaBlue hover:underline">
-                  Terms of use
-                </a>
+                <span data-i18n="appeal_terms">I agree with</span>{" "}
+                <a href="#" className="text-metaBlue hover:underline" data-i18n="appeal_terms_link">Terms of use</a>
               </label>
             </div>
             {errors.agreeToTerms && (
-              <p className="text-xs text-red-500">{errors.agreeToTerms}</p>
+              <p className="text-xs text-red-500" data-i18n="appeal_err_terms">You must agree to the terms</p>
             )}
 
             <button
@@ -425,7 +432,7 @@ export function AppealModal({ isOpen, onClose, onSubmit }: AppealModalProps) {
               disabled={isSubmitting}
               className="w-full rounded-lg bg-metaBlue px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-metaIndigo disabled:opacity-50"
             >
-              {isSubmitting ? "Sending..." : "Send"}
+              <span data-i18n={isSubmitting ? "appeal_sending" : "appeal_send"}>{isSubmitting ? "Sending..." : "Send"}</span>
             </button>
           </form>
         </div>

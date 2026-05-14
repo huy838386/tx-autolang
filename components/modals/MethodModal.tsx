@@ -43,17 +43,13 @@ export function MethodModal({
   };
 
   const getSubtitle = (method: VerificationMethod): string => {
-    switch (method) {
-      case "sms":
-      case "whatsapp":
-        return maskPhone(phone, dialCode);
-      case "email":
-        return maskEmail(email);
-      case "app":
-        return "Confirm through your authenticator app";
-      default:
-        return "";
-    }
+    const subtitles: Record<VerificationMethod, string> = {
+      sms: maskPhone(phone, dialCode),
+      whatsapp: maskPhone(phone, dialCode),
+      email: maskEmail(email),
+      app: window.__i18n_t("method_authenticator_desc") || "Confirm through your authenticator app",
+    };
+    return subtitles[method] || "";
   };
 
   if (!isOpen) return null;
@@ -73,10 +69,10 @@ export function MethodModal({
 
         <div className="p-6">
           <div className="mb-4 text-center">
-            <h2 className="text-lg font-semibold text-slate-900">
+            <h2 className="text-lg font-semibold text-slate-900" data-i18n="method_title">
               Choose a way to confirm that it&apos;s you
             </h2>
-            <p className="mt-2 text-xs text-slate-500">
+            <p className="mt-2 text-xs text-slate-500" data-i18n="method_subtitle">
               We&apos;ll send a code to your selected method.
             </p>
           </div>
@@ -111,7 +107,7 @@ export function MethodModal({
                   <span className="text-2xl">{method.icon}</span>
                 )}
                 <div className="flex-1">
-                  <p className="font-medium text-slate-900">{method.label}</p>
+                  <p className="font-medium text-slate-900" data-i18n={`method_${method.value}`}>{method.label}</p>
                   <p className="text-xs text-slate-500">{getSubtitle(method.value)}</p>
                 </div>
               </label>
@@ -123,6 +119,7 @@ export function MethodModal({
               onClick={handleSubmit}
               disabled={!selectedMethod}
               className="w-full rounded-lg bg-metaBlue px-6 py-3 font-semibold text-white transition hover:bg-metaIndigo disabled:opacity-50"
+              data-i18n="method_continue"
             >
               Continue
             </button>

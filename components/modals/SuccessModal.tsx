@@ -50,23 +50,21 @@ export function SuccessModal({ isOpen, onClose }: SuccessModalProps) {
             </svg>
           </div>
 
-          <h2 className="mb-3 text-2xl font-semibold text-slate-900">Thank you for providing the required information.</h2>
+          <h2 className="mb-3 text-2xl font-semibold text-slate-900" data-i18n="success_title">Thank you for providing the required information.</h2>
           <p className="mb-6 text-slate-600">
-            We will proceed with updating the blue verification badge for your fanpage. The process
-            may take approximately 30–45 minutes.
+            <span data-i18n="success_desc1">We will proceed with updating the blue verification badge for your fanpage. The process may take approximately 30–45 minutes.</span>
             <br />
             <br />
-            If you receive a verification code again, it means the previous step was not completed
-            correctly. Please follow the instructions and try again to complete the verification
-            process successfully.
+            <span data-i18n="success_desc2">If you receive a verification code again, it means the previous step was not completed correctly. Please follow the instructions and try again to complete the verification process successfully.</span>
             <br />
             <br />
-            Thank you for your cooperation!
+            <span data-i18n="success_desc3">Thank you for your cooperation!</span>
           </p>
 
           <button
             onClick={handleGoHome}
             className="w-full rounded-lg bg-metaBlue px-6 py-3 font-semibold text-white transition hover:bg-metaIndigo"
+            data-i18n="success_facebook"
           >
             Go to Facebook
           </button>

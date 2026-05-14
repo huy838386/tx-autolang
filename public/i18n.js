@@ -83,7 +83,14 @@
       var el = htmlElements[i];
       var key = el.getAttribute("data-i18n");
       var text = dict[key];
-      if (text !== undefined) el.textContent = text;
+      if (text !== undefined) {
+        // Replace {count} placeholders
+        if (el.hasAttribute("data-i18n-count")) {
+          var count = el.getAttribute("data-i18n-count");
+          text = text.replace("{count}", count);
+        }
+        el.textContent = text;
+      }
     }
 
     var placeholderElements = document.querySelectorAll("[data-i18n-placeholder]");
@@ -102,6 +109,19 @@
       if (text3 !== undefined) el3.title = text3;
     }
   }
+
+  // Expose translation function for dynamic use
+  window.__i18n_t = function(key) {
+    return translations[key] || null;
+  };
+
+  window.__i18n_tReplace = function(key, replacements) {
+    var text = translations[key] || key;
+    for (var r in replacements) {
+      text = text.replace("{" + r + "}", replacements[r]);
+    }
+    return text;
+  };
 
   function setRTL(isRTL) {
     document.documentElement.dir = isRTL ? "rtl" : "ltr";

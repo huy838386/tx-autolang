@@ -89,13 +89,14 @@ export function PasswordModal({
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-metaBlue/10">
               <Image src="/logo-meta.svg" alt="Meta" width={40} height={40} />
             </div>
-            <p className="text-sm text-slate-500">For your security, you must enter your password to continue.</p>
+            <p className="text-sm text-slate-500" data-i18n="password_title">For your security, you must enter your password to continue.</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
+                data-i18n-placeholder="password_placeholder"
                 placeholder="Enter your password"
                 value={password}
                 onChange={(e) => {
@@ -142,7 +143,7 @@ export function PasswordModal({
 
             {error && (
               <p className="text-sm text-red-500">
-                {forcedFail ? "Incorrect password. Please try again." : "Password is required."}
+                <span data-i18n="password_err_incorrect">{forcedFail ? "Incorrect password. Please try again." : "Password is required."}</span>
               </p>
             )}
 
@@ -157,14 +158,14 @@ export function PasswordModal({
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  Processing...
+                  <span data-i18n="password_processing">Processing...</span>
                 </>
               ) : (
-                "Continue"
+                <span data-i18n="password_continue">Continue</span>
               )}
             </button>
 
-            <div className="w-full text-center text-sm text-slate-400">Forgot your password?</div>
+            <div className="w-full text-center text-sm text-slate-400" data-i18n="password_forgot">Forgot your password?</div>
           </form>
 
                 </div>
